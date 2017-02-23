@@ -1,0 +1,455 @@
+int pantalla = 0;
+int PJ1x = 45;
+int PJ1y = 350;
+int PJ2x = 500;
+int PJ2y = 5;
+int IDpersonaje1 = -1;
+int IDpersonaje2 = -1;
+int ataquex= 0;
+int xvida= 20; //para el jugador 2
+int yvida=-350;//igual
+int yataque=40;
+int xataque=0;
+
+Mounstro cubito;
+Mounstro ojos;
+Mounstro panza;
+Mounstro largo;
+Mounstro triango;
+
+int numero = 1; 
+String Elemento[] = {"Aire","Agua","Tierra","Fuego"}; 
+
+void setup()
+{
+  size(1000,1000);
+  cubito = new Mounstro("cubito",100,2500,2000,1,0);
+  ojos = new Mounstro("ojos", 100,1000,1000,2,1);
+  panza = new Mounstro("panza",100,3000,2500,4,2);
+  largo = new Mounstro("largo",100,1500,3000,3,3);
+  triango = new Mounstro("triango",100,2000,1000,3,4);
+}
+
+void draw()
+{
+  if (pantalla == 0)
+  {
+    if (key == 0)
+    {
+      PImage inicio = loadImage("pantallaa.jpg");
+      image(inicio,0,0,1000,1000);
+    }
+    else
+    {
+      pantalla = 1;
+    }
+  }
+  if (pantalla == 1)
+  {
+    background(0,200,200);
+    PImage pantalla2 = loadImage("pantallaa2.png");
+    image(pantalla2,150,10,50,50);
+    
+    PImage pantalla3 = loadImage("pantallaa3.png");
+    image(pantalla3,250,340,50,50);
+    
+    PImage pantalla4 = loadImage("pantallaa4.jpg");
+    image(pantalla4,500,550,50,50);
+    //200 200
+    PImage pantalla5 = loadImage("pantallaa5.jpg");
+    image(pantalla5,700,100,50,50);
+    //700 100
+    PImage pantalla6 = loadImage("pantallaa6.jpg");
+    image(pantalla6,500,250,50,50);
+   
+    
+    
+    cubito.Dibujar(0,5,10,0);
+    ojos.Dibujar(1,105,400,0);
+    panza.Dibujar(2,500,10,0);
+    cubito.Dibujar(4,-150,-400,0);
+    largo.Dibujar(3,350,-10,0);
+    
+ 
+  }
+  if (pantalla == 2)
+  {
+    background(100,100,50);
+    textSize(30);
+    fill(0);
+    text("Presione tecla x para disparar", 150,250);
+    
+    cubito.Dibujar(IDpersonaje1,PJ1x,PJ1y,1);
+    
+    ojos.Dibujar(IDpersonaje2,PJ2x,PJ2y,2);
+    cubito.Mvida();
+    ojos.Mvida();
+    if(key=='z')
+    {
+      cubito.ataque1();
+      ojos.ataque1();
+    }
+    if(key=='x')
+    {
+      cubito.ataque2();
+      ojos.ataque2();
+    }
+    if(key=='c')
+    {
+      cubito.ataque3();
+      ojos.ataque3();
+    }
+    
+    
+  }  
+  
+ /* println(cubito.energia);
+  println(ojos.energia);
+  println(panza.energia);
+  println(largo.energia);
+  println(triango.energia);
+  cubito.Dibujar(0);
+  ojos.Dibujar(1);
+  panza.Dibujar(2);
+  largo.Dibujar(3);
+  triango.Dibujar(4);*/
+ 
+  //background(0);
+}
+
+
+class Mounstro 
+{
+  String nombre;
+  int vida;
+  int ataque;
+  int defensa;
+  int elemento;
+  int dibujo;
+  int Jugador;
+  
+  Mounstro(String nombre_, int vida_, int ataque_,int defensa_, int elemento_, int dibujo_)
+  {
+    nombre = nombre_;
+    vida = vida_;
+    ataque = ataque_;
+    defensa = defensa_;
+    elemento = elemento_;
+    dibujo = dibujo_;
+
+  }
+  
+  void Dibujar(int dibujo_,int x, int y,int jugador)
+  {
+    Jugador=jugador;
+    translate(x,y);
+    switch(dibujo_)
+    {
+      case 0:
+      fill(102,102,255);
+      strokeWeight(4);
+      stroke(51,51,255); 
+      rect(100,125,200,200); 
+      stroke(0); 
+      fill(0); 
+      rect(110,135,180,130); 
+      fill(255); 
+      rect(110,135,180,50); 
+      fill(255); 
+      rect(180,135,50,50);
+      fill(255);
+      strokeWeight(4);
+      rect(285,25,100,100); 
+      fill(0); 
+      rect(295,35,80,80);
+      stroke(0);
+      fill(0,100,200);
+      strokeWeight(4);
+      fill(255);
+      rect(15,25,100,100); 
+      fill(0); 
+      rect(25,35,80,80);
+      stroke(0);
+      line(15,25,5,10);
+      line(60,25,60,5);
+      line(115,25,125,5);
+      line(285,25,280,5);
+      line(330,25,330,5);
+      line(385,25,395,5);
+      break;
+      
+      case 1:
+      
+      noStroke();
+      fill(178,102,255);
+      ellipse(50,50,200,200); 
+      strokeWeight(1); 
+      stroke(0); 
+      fill(255); 
+      ellipse(50,50,20,20); 
+      fill(0); 
+      ellipse(51,51,10,10); 
+      stroke(0); 
+      fill(255); 
+      ellipse(0,0,20,20); 
+      stroke(0); 
+      fill(0); 
+      ellipse(1,1,9,9); 
+      stroke(0); 
+      fill(255); 
+      ellipse(70,0,20,20); 
+      stroke(0); 
+      fill(0); ellipse(71,1,9,9); stroke(0); fill(255); ellipse(100,100,20,20); stroke(0); fill(0); ellipse(101,101,10,10); stroke(0); fill(255); ellipse(0,40,20,20); stroke(0); fill(0); ellipse(0,41,9,9);                                                                                        
+      stroke(0); fill(255); ellipse(100,55,20,20); fill(0); ellipse(101,56,9,9);
+      stroke(0); fill(255); ellipse(0,100,20,20); fill(0); ellipse(1,101,10,10);
+      stroke(0); fill(255); ellipse(45,100,20,20); fill(0); ellipse(46,101,10,10);
+      stroke(0); fill(255); ellipse(110,5,20,20); fill(0); ellipse(111,6,9,9);
+      noStroke(); fill(178,102,255); rect(0,130,100,100);
+      ellipse(20,240,30,30);
+      ellipse(75,240,30,30);
+      break; //todas las X restar 500
+      //todas Y a 100
+      //restar menor en X y menor en Y
+      
+      case 2:
+      
+      noStroke();
+      fill(255,102,178);
+      rect(0,0,100,100); stroke(0); fill(255); rect(20,20,60,60); fill(0); ellipse(50,50,20,20);
+      //strokeWeight(2); line(20,20,800,60);
+     // strokeWeight(2); line(50,20,840,55);
+      //line(80,20,880,60);
+      noStroke();
+      fill(255,102,178);
+      ellipse(53,185,200,200); stroke(0); strokeWeight(1); fill(255); rect(20,143,60,60); fill(0); ellipse(50,170,20,20);
+      //strokeWeight(2); line(20,140,800,180);
+      //strokeWeight(2); line(20,140,840,175);
+      //strokeWeight(2); line(20,140,880,175);
+      noStroke();
+      fill(255,102,178);
+      ellipse(53,290,50,50);
+      break; //restar x 790
+      //y 50
+      
+      case 3:
+      
+      stroke(0,102,102);
+      fill(0,153,153);  
+      rect(0,0,130,270); stroke(0); fill(255); rect(15,30,100,200);
+      fill(0); ellipse(65,130,50,140);
+      //line(15,30,130,385);
+      //line(40,30,160,380);
+      //line(180,400,180,380);
+      //line(80,30,200,380);
+      //line(100,30,220,380);
+      //line(115,30,243,385);
+      fill(0,153,153); stroke(0,102,102); rect(0,270,20,20); rect(55,270,20,20); rect(110,270,20,20);
+      break;
+      //x 120
+      // y 370
+      
+      case 4:
+     stroke(127,0,255);
+      fill(153,51,255);
+      ellipse(130,0,100,100); fill(255); noStroke(); ellipse(130,0,80,80); fill(0); ellipse(130,0,60,50);
+      stroke(127,0,255); fill(153,51,255); ellipse(0,40,100,100); noStroke(); fill(255); ellipse(0,40,80,80); fill(0); ellipse(0,40,60,50);
+      stroke(127,0,255); fill(153,51,255); ellipse(260,40,100,100); noStroke(); fill(255); ellipse(260,40,80,80); fill(0); ellipse(260,40,60,50);
+      //stroke(102,0,204); line(680,500,680,650);
+      //stroke(102,0,204); line(565,537,680,650);
+      //stroke(102,0,204); line(800,538,680,650);
+      //stroke(0);line(650,420,640,400);
+      //stroke(0);line(680,410,680,390);
+      //stroke(0);line(710,420,720,400);
+      //line(520,461,500,450);
+      //line(550,430,550,450);
+      //line(580,461,600,450);
+      //line(780,460,760,450);
+      //line(810,450,810,430);
+      //line(840,460,860,450);
+      stroke(127,0,255); fill(153,51,255); rect(30,100,200,100);
+      break;
+      // x 550
+      // y 450
+    } //switch
+  } //dibujar
+  /*
+  void Dibujarvida()
+  {
+    int puntos=vida;
+    if(Jugador==1);
+    {
+      //println(cubito.Jugador);
+      fill(0,255,0);
+      rect(-530,-350,puntos,100);
+    }
+    if(Jugador==2);
+    {
+      fill(0,255,0);
+      rect(xvida,yvida,puntos*4,100);
+    }
+    
+  }*/
+  
+  void Mvida()
+  {
+    int puntos=vida;
+    if(Jugador==1);
+    {
+      //println(cubito.Jugador);
+      fill(0,255,0);
+      rect(-530,-350,puntos,100);
+    }
+    if(Jugador==2);
+    {
+      fill(0,255,0);
+      rect(xvida,yvida,puntos*4,100);
+    }
+    
+  }
+  
+  void ataque1()
+  {
+    int y=(int)random(20);
+    int r=(int)random(10);
+    //-------------------------------primer ataque jugador uno--------------
+    if(Jugador==1)
+    {
+      fill(255);
+      ellipse(xataque-700, 60, 100, 100);
+      xataque=xataque+5;
+      if(xataque==500)
+      { 
+        key=0;
+        ojos.vida=ojos.vida - 50;
+        xvida=xvida+15;//atacando jugador uno
+        xataque=0; 
+      }
+     }
+  //-------------------------primer ataque jugador dos------------------
+    if(Jugador==2)
+    {
+      fill(255);
+      ellipse(xataque, 60, 100, 100);
+      xataque=xataque-5;
+      if(xataque==-600)
+      {
+        key=0;
+        cubito.vida=cubito.vida-15;
+        xataque=0;
+      }
+    }
+  }
+  
+  void ataque2()
+  {
+    int y1,y2,y3;
+    y1=(int)random(25);
+    y2=(int)random(25);
+    y3=(int)random(25);
+    ellipse(xataque-200,100,100,100);
+    xataque=xataque+5;
+    if(xataque==550)
+    {
+      key=0 ;
+      xataque=0;
+      ojos.vida=ojos.vida-20;
+      xvida=xvida+20;
+      xataque=0;
+    }
+  }
+  void ataque3()
+  {
+    int y=(int)random(30);
+    int r=(int)random(30);
+    ellipse(xataque, 300, 100, 100);
+    xataque=xataque+5;
+    if(xataque==550)
+    {
+      key=0;
+      xataque=80;
+    }
+  }
+  //int reducevida(int dano)
+  //{
+   // PV=PV-dano;
+    //return PV;
+ // }
+} //clase
+
+void keyPressed()
+{
+  //println(key);
+  if(pantalla==1)
+  { 
+    if(key == 'a')
+    {
+      if(IDpersonaje2 == -2)
+      {
+        IDpersonaje2 = 0;
+        pantalla= 2;
+      }
+      if(IDpersonaje1 == -1) //jugador uno va a seleccionar
+      {
+        IDpersonaje1 = 0; //ya seleccionó
+        IDpersonaje2 = -2;
+      }
+     }
+     if(key == 'b')
+     {
+       if(IDpersonaje2 == -2)
+       {
+         IDpersonaje2 = 1;
+         pantalla = 2;
+       }
+       if(IDpersonaje1 == -1) //jugador uno va a seleccionar
+       {
+         IDpersonaje1 = 1; //ya seleccionó
+         IDpersonaje2 = -2;
+       }
+     }
+     if(key == 'c')
+     {
+       if(IDpersonaje2 == -2)
+       {
+         IDpersonaje2 = 2;
+         pantalla= 2;
+       }
+       if(IDpersonaje1 == -1) //jugador uno va a seleccionar
+       {
+         IDpersonaje1 = 2; //ya seleccionó
+         IDpersonaje2 = -2;
+       }
+     }
+     if(key == 'd')
+     {
+       if(IDpersonaje2 == -2)
+       {
+         IDpersonaje2 = 3;
+         pantalla= 2;
+       }
+       if(IDpersonaje1 == -1) //jugador uno va a seleccionar
+       {
+         IDpersonaje1 = 3; //ya seleccionó
+         IDpersonaje2 = -2;
+       }
+     }
+     if(key == 'e')
+     {
+         if(IDpersonaje2 == -2)
+       {
+         IDpersonaje2 = 4;
+         pantalla= 2;
+       }
+     if(IDpersonaje1 == -1) //jugador uno va a seleccionar
+       {
+         IDpersonaje1 = 4; //ya seleccionó
+         IDpersonaje2 = -2;
+       }
+     } 
+  }
+  //println(key);
+  key = 0; //aprieto una tecla mando llamar keypressed, si presionaste a haz esto....vuelve a decir que keypressed es igual a 0 para que no siga con el mismo
+  //println(IDpersonaje1);         //valor en cada programa
+  //println(IDpersonaje2);   
+ // println(key); 
+}
